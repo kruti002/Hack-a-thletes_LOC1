@@ -1,92 +1,102 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from "react";
+import { product } from "./data";
 
-function Ai() {
-  const [username, setUsername] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [readmeContent, setReadmeContent] = useState('');
+const Ai = () => {
+  const [selectedItem1, setSelectedItem1] = useState(0);
+  const [selectedItem2, setSelectedItem2] = useState(0);
 
-  const handleInputChange = (e) => {
-    setUsername(e.target.value);
+  const handleItem1Change = (event) => {
+    const value = parseInt(event.target.value, 10);
+    if (value !== selectedItem2) {
+      setSelectedItem1(value);
+    } else {
+      setSelectedItem1(0);
+    }
   };
 
-  const handleSearchClick = () => {
-    setLoading(true);
-    fetch('https://spit-hackthn.vercel.app/get-readme/', {
-      method: 'POST',
-      headers: {
-        'accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ url: username }) // Assuming the input is the full URL of the GitHub repo
-    })
-    .then(response => response.json())
-    .then(data => {
-      setReadmeContent(data.readme_content);
-      setLoading(false);
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      setLoading(false);
-    });
+  const handleItem2Change = (event) => {
+    const value = parseInt(event.target.value, 10);
+    if (value !== selectedItem1) {
+      setSelectedItem2(value);
+    } else {
+      setSelectedItem2(0);
+    }
   };
+
+  const product1 =
+    selectedItem1 !== 0
+      ? product[selectedItem1]
+      : { image: "", price: "N/A", description: "N/A", brand: "N/A" };
+  const product2 =
+    selectedItem2 !== 0
+      ? product[selectedItem2]
+      : { image: "", price: "N/A", description: "N/A", brand: "N/A" };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '50px' }}>
-      {loading && (
-        <div style={{ width: '100%', backgroundColor: '#ccc' }}>
-          <div style={{ height: '4px', width: '50%', backgroundColor: '#007BFF', transition: 'width 2s' }}></div>
-        </div>
-      )}
-      <div style={{ marginBottom: '20px', opacity: loading ? 0 : 1, transition: 'opacity 0.5s ease' }}>
-        <div style={{
-          fontSize: '30px',
-          fontFamily: 'Arial, sans-serif',
-          color: '#007BFF',
-          fontWeight: 'bold'
-        }}>
-          Understand repo with the power of AI
+    <div>
+      <div className="container">
+        <div className="col-md-9 mx-auto">
+          <table className="table">
+            <tr>
+              <th>Select Product</th>
+              <th width="250px">
+                <select
+                  className="form-control"
+                  value={selectedItem1}
+                  onChange={handleItem1Change}
+                >
+                  <option value={0}>-- Select Anyone --</option>
+                  {product.map((item, index) => (
+                    <option key={index} value={index}>
+                      {item.title}
+                    </option>
+                  ))}
+                </select>
+              </th>
+              <th width="250px">
+                <select
+                  className="form-control"
+                  value={selectedItem2}
+                  onChange={handleItem2Change}
+                >
+                  <option value={0}>-- Select Anyone --</option>
+                  {product.map((item, index) => (
+                    <option key={index} value={index}>
+                      {item.title}
+                    </option>
+                  ))}
+                </select>
+              </th>
+            </tr>
+            <tr>
+              <th>Product Image</th>
+              <td>
+                <img src={product1.image} alt="" />
+              </td>
+              <td>
+                <img src={product2.image} alt="" />
+              </td>
+            </tr>
+            <tr>
+              <th>Product Price</th>
+              <td>INR {product1.price}</td>
+              <td>INR {product2.price}</td>
+            </tr>
+            <tr>
+              <th>Product Description</th>
+              <td>{product1.description}</td>
+              <td>{product2.description}</td>
+            </tr>
+            <tr>
+              <th>Product Brand</th>
+              <td>{product1.brand}</td>
+              <td>{product2.brand}</td>
+            </tr>
+          </table>
         </div>
       </div>
-      <input
-        type="text"
-        value={username}
-        onChange={handleInputChange}
-        placeholder="Enter GitHub repository URL..."
-        style={{
-          width: '300px',
-          padding: '10px',
-          marginBottom: '20px',
-          border: '2px solid #000000',
-          borderRadius: '5px',
-          outline: 'none',
-          fontSize: '16px',
-          fontFamily: 'Arial, sans-serif',
-          backgroundColor: 'transparent',
-          color: 'black',
-        }}
-      />
-      <button
-        onClick={handleSearchClick}
-        style={{
-          padding: '10px 20px',
-          backgroundColor: '#000000',
-          color: 'white',
-          border: 'none',
-          borderRadius: '5px',
-          cursor: 'pointer',
-          fontSize: '16px',
-          fontFamily: 'Arial, sans-serif',
-        }}
-      >
-        Search
-      </button>
-      {readmeContent && (
-        <div style={{ marginTop: '20px', textAlign: 'left', width: '100%', maxWidth: '600px', overflowWrap: 'break-word' }}>
-          <pre style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>{readmeContent}</pre>
-        </div>
-      )}
     </div>
   );
-}
+};
 
-export default Ai;
+export default Ai;

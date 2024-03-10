@@ -1,55 +1,79 @@
 import React, { useState } from "react";
-import {
-  Flex,
-  Box,
-  VStack,
-  Heading,
-  Text,
-  Divider,
-  IconButton,
-  useDisclosure,
-  Input,
-  Avatar,
-  Button,
-} from "@chakra-ui/react";
+import { Calendar, dateFnsLocalizer } from "react-big-calendar";
+import "react-big-calendar/lib/css/react-big-calendar.css";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { Flex, Box, VStack, Heading } from "@chakra-ui/react";
+import { enIN } from "date-fns/locale";
 import axios from "axios";
-import SideBar from "./Elements/SideBar";
-import Calendar from "@ericz1803/react-google-calendar";
-import Nav from "./Elements/Nav";
+import SideBar from "../components/Elements/SideBar";
+import Nav from "../components/Elements/Nav";
 
-const Upcoming_Events = () => {
-  //   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+import format from "date-fns/format";
+import getDay from "date-fns/getDay";
+import parse from "date-fns/parse";
+import startOfWeek from "date-fns/startOfWeek";
 
-  const [response, setResponse] = useState([]);
-  const API_KEY = "AIzaSyBWct3-uW-9XBR2rWx3mqmt64-8xpHeHTI";
-  let calendars = [
-    { calendarId: "https://calendar.google.com/calendar/embed?src=shashwatshah02%40gmail.com&ctz=Asia%2FKolkata" },
-    {
-      calendarId: "YOUR_CALENDAR_ID_2",
-      color: "#B241D1", //optional, specify color of calendar 2 events
-    },
-  ];
-  let config = {
-    method: "get",
-    maxBodyLength: Infinity,
-    url: "https://spit-hackthn.vercel.app/get-user-data/deepgohil",
-    headers: {
-      accept: "application/json",
-    },
+import "./Upcoming_Events.css";
+
+const locales = {
+  "en-IN": enIN,
+};
+
+const localizer = dateFnsLocalizer({
+  format,
+  parse,
+  startOfWeek,
+  getDay,
+  locales,
+});
+
+const events = [
+  {
+    title: "World NGO Day",
+    allDay: true,
+    start: new Date(2024, 3, 1),
+    end: new Date(2024, 3, 1),
+  },
+  {
+    title: "International Women's Day",
+    start: new Date(2024, 3, 8),
+    end: new Date(2021, 3, 8),
+  },
+  {
+    title: "Conference",
+    start: new Date(2021, 6, 20),
+    end: new Date(2021, 6, 23),
+  },
+];
+
+function App() {
+  const [newEvent, setNewEvent] = useState({ title: "", start: "", end: "" });
+  const [allEvents, setAllEvents] = useState(events);
+  const [searchTerm, setSearchTerm] = useState(" ");
+  const [response, setResponse] = useState([])
+
+  const handleSearch = () => {
+    console.log("Searching for:", searchTerm);
   };
 
-  axios
-    .request(config)
-    .then((response) => {
-      setResponse(response.data);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  function handleAddEvent() {
+    for (let i = 0; i < allEvents.length; i++) {
+      const d1 = new Date(allEvents[i].start);
+      const d2 = new Date(newEvent.start);
+      const d3 = new Date(allEvents[i].end);
+      const d4 = new Date(newEvent.end);
+
+      if ((d1 <= d2 && d2 <= d3) || (d1 <= d4 && d4 <= d3)) {
+        alert("CLASH");
+        break;
+      }
+    }
+    setAllEvents([...allEvents, newEvent]);
+  }
 
   return (
     <Flex>
-      {/* Sidebar */}
       <Box
         bg="gray.200"
         w="250px"
@@ -60,28 +84,64 @@ const Upcoming_Events = () => {
         overflowY="auto"
         boxShadow="0px 0px 10px rgba(0, 0, 0, 0.1)"
       >
-        {/* Sidebar Content */}
         <SideBar name={response.username} />
       </Box>
 
-      {/* Content */}
       <Box ml="250px" p="4" flex="1" overflowY="auto">
-        {/* Navbar */}
         <Nav />
-
-        {/* Main Content */}
         <VStack spacing="4" mt="60px">
-          <Heading size="lg">Welcome {response.username}</Heading>
-          {/* Add your dashboard content here */}
-          <Box bg="gray.100" w="100%" p="2%" height={"80vh"}>
-            {/* <Calendar apiKey={API_KEY} calendars={calendars} />
-            <a target="_blank" href="https://calendar.google.com/calendar/event?action=TEMPLATE&amp;tmeid=N3FqcjQ1OWpsNWl1dWlzM2ZxOGNiOGY4NGwgZ2F1cmliNDlAbQ&amp;tmsrc=gaurib49%40gmail.com"><img border="0" src="https://www.google.com/calendar/images/ext/gc_button1_en-GB.gif"/></a> */}
-            <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=Asia%2FKolkata&bgcolor=%23ffffff&src=c2hhc2h3YXRzaGFoMDJAZ21haWwuY29t&src=MDlmYWVlMzk1MzEwZTJmZjczNTlhODM2YTEwZTYwNGM1NjRjNmJhMTcyNzRkMjA3YWIzYmVjN2JjMzNiOTQzM0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y2xhc3Nyb29tMTAyODQ2ODM2OTE5NzcxODM5OTQyQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20&src=Y2xhc3Nyb29tMTE4NDIwODEwOTYzNTQxMTQ5MjE5QGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20&src=Y2xhc3Nyb29tMTE3NjAzNjA3MjE3OTk1MjcxODI3QGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20&src=Y2xhc3Nyb29tMTE1Mzc4NDgyMDM3NzA5Mzc4MTMzQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20&src=ZW4tZ2IuaW5kaWFuI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=Y2xhc3Nyb29tMTE1NzUzOTUyNDc2NTk0NjA2MDAyQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20&src=Z2F1cmliNDlAZ21haWwuY29t&src=Y2xhc3Nyb29tMTAzMjM1Mjk1OTg0Nzk0OTk0NzA3QGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23039BE5&color=%23D81B60&color=%230047a8&color=%230047a8&color=%23c26401&color=%23202124&color=%230B8043&color=%23c26401&color=%23E4C441&color=%23137333" style={{border:"solid 1px #777", width:"100%", height:"70vh", frameborder:"0", scrolling:"no"}}></iframe>
-          </Box>
+          <Heading size="lg"> {response.username}</Heading>
+          {/* <div className="search-container">
+            <input
+              type="text"
+              placeholder="Search..."
+              className="search-input"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <button type="button" className="search-button" onClick={handleSearch}>
+              Search
+            </button>
+          </div> */}
+          <div className="App">
+            <h1>Upcoming Events </h1>
+            {/* <h2>Add New Event</h2> */}
+            <div>
+              {/* <input
+                type="text"
+                placeholder="Add Title"
+                style={{ width: "20%", marginRight: "10px" }}
+                value={newEvent.title}
+                onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })}
+              />
+              <DatePicker
+                placeholderText="Start Date"
+                style={{ marginRight: "10px" }}
+                selected={newEvent.start}
+                onChange={(start) => setNewEvent({ ...newEvent, start })}
+              />
+              <DatePicker
+                placeholderText="End Date"
+                selected={newEvent.end}
+                onChange={(end) => setNewEvent({ ...newEvent, end })}
+              />
+              <button style={{ marginTop: "10px" }} onClick={handleAddEvent}>
+                Add Event
+              </button> */}
+            </div>
+            <Calendar
+              localizer={localizer}
+              events={allEvents}
+              startAccessor="start"
+              endAccessor="end"
+              style={{ height: 500, margin: "50px" }}
+            />
+          </div>
         </VStack>
       </Box>
     </Flex>
-  );
-};
 
-export default Upcoming_Events;
+  );
+}
+
+export default App;

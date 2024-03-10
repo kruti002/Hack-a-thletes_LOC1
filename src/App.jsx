@@ -26,6 +26,8 @@ import ProjectRec from "./components/Elements/ProjectRec.jsx";
 import ProjectDash from "./components/Sections/ProjectDash.jsx";
 import Upcoming_Events from "./components/Upcoming_Events.jsx";
 import EmailsDash from "./components/Sections/EmailsDash.jsx";
+import Ai from "./components/Elements/Ai.jsx"
+
 
 export default function App() {
   
@@ -77,4 +79,3 @@ export default function App() {
     </>
   );
 }
-

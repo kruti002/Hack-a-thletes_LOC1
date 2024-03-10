@@ -63,9 +63,9 @@ export default function Services() {
             <Advertising className="flexSpaceCenter">
               <AddLeft>
                 <h4 className="font15 semiBold">A few words about us</h4>
-                <h2 className="font40 extraBold">Find the Perfect Open Source Software for You</h2>
+                <h2 className="font40 extraBold">Find the Perfect Price comparision website for You</h2>
                 <p className="font12">
-                At our website, we make it simple and easy to find the best open-source software recommendations based on your interests. Whether you're a developer, designer, or just someone looking for new tools, we've got you covered. Our intuitive interface and powerful recommendation engine ensure that you'll discover the perfect software to meet your needs.
+                At our website, we make it simple and easy to find the best product price comparision recommendations based on your interests. Whether you're a developer, designer, or just someone looking for new tools, we've got you covered. Our intuitive interface and powerful recommendation engine ensure that you'll discover the perfect software to meet your needs.
                 </p>
                 <ButtonsRow className="flexNullCenter" style={{ margin: "30px 0"}}>
                   <div style={{ width: "190px" }}>

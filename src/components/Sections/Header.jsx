@@ -26,10 +26,10 @@ export default function Header() {
       <LeftSide className="flexCenter">
         <div>
           <h1 className="extraBold font60">
-            Discover the perfect openSource project for you !!
+            Discover the perfect price comparision software curated just for you. !!
           </h1>
           <HeaderP className="font13 semiBold">
-            Find and explore a wide range of open-source software tailored to
+            Find and explore a wide range of e-commercewebsites tailored to
             your interests. Start your journey today! Lorem ipsum dolor sit amet
             consectetur adipisicing elit. Quasi assumenda corrupti eligendi quis
             aliquid eveniet pariatur dolore possimus iste consequuntur error

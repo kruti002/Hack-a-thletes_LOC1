@@ -18,7 +18,7 @@ export default function Projects() {
       <div className="whiteBg">
         <div className="container">
           <HeaderInfo>
-            <h1 className="font40 extraBold">Unleash the Power of Open Source</h1>
+            <h1 className="font40 extraBold">Unleash the Power of Comparision between E-Commerce  </h1>
             <p className="font13">
             Our website offers personalized recommendations, a wide variety of categories, 
               <br />

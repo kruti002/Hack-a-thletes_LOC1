@@ -1,0 +1,114 @@
+.App {
+    text-align: center;
+  }
+  
+  .container {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px; /* Reduce spacing from the top */
+  }
+  
+  .table-container {
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 50%; /* Set width for the table container */
+    border-radius: 20px; /* Adjust border-radius */
+    overflow: hidden; /* Hide overflow to make border-radius work */
+    background-color: #ffffff; /* Set background color */
+    margin-right: 10px; /* Add spacing between table and chart */
+  }
+  
+  .chart-container {
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 50%; /* Set width for the chart container */
+    border-radius: 20px; /* Adjust border-radius */
+    overflow: hidden; /* Hide overflow to make border-radius work */
+    background-color: #ffffff; /* Set background color */
+  }
+  
+  .chart-box {
+    border: 2px solid #ccc;
+    padding: 10px; /* Reduce padding */
+    border-radius: 15px;
+    display: flex; /* Use flexbox */
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: separate; /* Separate borders between cells */
+    border-spacing: 5px; /* Reduce spacing between columns */
+  }
+  
+  table th,
+  table td {
+    border: 1px solid #ffffff;
+    padding: 8px; /* Reduce padding */
+    text-align: center;
+    border-radius: 10px; /* Adjust border-radius */
+    background-color: #ffffff;
+  }
+  
+  /* Set background color for table header */
+  table th {
+    background-color: rgb(155, 220, 239);
+  }
+  
+  /* Adjustments for smaller screens */
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column; /* Change to column layout on smaller screens */
+      align-items: center; /* Center items on smaller screens */
+    }
+  
+    .table-container,
+    .chart-container {
+      width: 100%; /* Utilize full width on smaller screens */
+      margin-right: 0; /* Remove margin for smaller screens */
+    }
+  }
+  .search-container {
+    display: flex;
+    align-items: center; /* Align items vertically */
+    justify-content: center; /* Center items horizontally */
+    margin-top: 10px; /* Reduce spacing from the top */
+  }
+  
+  .search-input {
+    padding: 8px;
+    border: 1px solid #242323;
+    border-radius: 5px;
+    margin-right: 5px; /* Reduce spacing between input and button */
+    width: 300px; /* Adjust width */
+  }
+  
+  .search-button {
+    padding: 8px 15px;
+    background-color: #01070f; /* Button color */
+    color: white; /* Button text color */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  /* Optional: Hover effect */
+  .search-button:hover {
+    background-color: #4e4e50; /* Darker button color on hover */
+  }
+  
+  .submit-button {
+    padding: 8px 15px;
+    background-color: #ff0000; /* Red color */
+    color: white; /* Button text color */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px; /* Reduce space from the top */
+  }
+  
+  /* Optional: Hover effect */
+  .submit-button:hover {
+    background-color: #cc0000; /* Darker red color on hover */
+  }

@@ -56,7 +56,7 @@ const Dashboard = () => {
         <Heading size="lg">Welcome {response.username}</Heading>
           {/* Add your dashboard content here */}
           <Box bg="gray.100" w="100%" p='2%'>
-            <IssueCards />
+           
           </Box>
         </VStack>
       </Box>

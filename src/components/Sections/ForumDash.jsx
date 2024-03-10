@@ -12,22 +12,22 @@ const ForumDash = () => {
   const [response, setResponse] = useState([])
 
 
-  let config = {
-      method: 'get',
-      maxBodyLength: Infinity,
-      url: 'https://spit-hackthn.vercel.app/get-user-data/deepgohil',
-      headers: { 
-        'accept': 'application/json'
-      }
-    };
+  // let config = {
+  //     method: 'get',
+  //     maxBodyLength: Infinity,
+  //     url: 'https://spit-hackthn.vercel.app/get-user-data/deepgohil',
+  //     headers: { 
+  //       'accept': 'application/json'
+  //     }
+  //   };
     
-    axios.request(config)
-    .then((response) => {
-      setResponse((response.data));
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  //   axios.request(config)
+  //   .then((response) => {
+  //     setResponse((response.data));
+  //   })
+  //   .catch((error) => {
+  //     console.log(error);
+  //   });
 
 
   return (
